@@ -14,6 +14,7 @@ User Habitat API is a RESTful API designed for managing users and their associat
 - **Express.js**: Web framework for Node.js.
 - **Nodemon**: Utility that automatically restarts the server upon code changes.
 - **JSON Files**: Simple flat file databases (`dbUsers.json`, `dbHouses.json`).
+- **OpenAPI**: Specification for defining API endpoints, request parameters, and response
 
 ## Installation
 1. Clone the repository:
@@ -93,7 +94,25 @@ Testing can be done using the provided `request.http` file, which contains prede
     ```
 
 ## Contributing
-Contributions are welcome! Please fork the repository and submit a pull request with your proposed changes. Make sure to follow the project's coding standards and thoroughly test your changes before submission.
+Contributions are welcome! To contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch:
+    ```bash
+    git checkout -b feature-branch
+    ```
+3. Make your changes.
+4. Commit your changes:
+    ```bash
+    git commit -am 'Add new feature'
+    ```
+5. Push to the branch:
+    ```bash
+    git push origin feature-branch
+    ```
+6. Create a new Pull Request.
+
+Make sure to follow the project's coding standards and thoroughly test your changes before submission.
 
 ## License
 This project is licensed under the ISC License. See the [LICENSE](LICENSE) file for details.
