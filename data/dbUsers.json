@@ -1,0 +1,28 @@
+{
+    "users": [
+        {
+            "id": "0001",
+            "name": "Alberto Alvarez"
+        },
+        {
+            "id": "0002",
+            "name": "Berta Benitez"
+        },
+        {
+            "id": "0003",
+            "name": "Carolina Caceres"
+        },
+        {
+            "id": "0004",
+            "name": "Doria Duran"
+        },
+        {
+            "id": "0005",
+            "name": "Esteban Estevez"
+        },
+        {
+            "id": "0006",
+            "name": "Felipe Flores"
+        }
+    ]
+}

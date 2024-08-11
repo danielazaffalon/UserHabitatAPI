@@ -1,0 +1,21 @@
+{
+  "name": "user_habitat",
+  "version": "1.0.0",
+  "description": "API REST for users and housing management",
+  "main": "index.js",
+  "type": "module",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "author": "Daniela Zaffalon",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

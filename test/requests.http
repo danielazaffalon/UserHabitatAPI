@@ -1,0 +1,252 @@
+GET http://localhost:3000/users HTTP/1.1
+Authorization: Bearer mockToken
+
+### Get user by ID
+GET http://localhost:3000/users/0002 HTTP/1.1
+Authorization: Bearer mockToken
+
+### Get user by ID that not exist
+GET http://localhost:3000/users/0008 HTTP/1.1
+Authorization: Bearer mockToken
+
+### Create user
+POST http://localhost:3000/users HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "name":"Gabriel Garcia"
+}
+
+###
+PATCH http://localhost:3000/users/0007 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "name":"Gabriel Garcia Gutierrez"
+}
+
+### PATCH user doesn't exist
+PATCH http://localhost:3000/users/0009 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "name":"Gabriel Garcia Gutierrez"
+}
+
+### PATCH bad parameter
+PATCH http://localhost:3000/users/0007 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "age":"25"
+}
+
+###
+PUT http://localhost:3000/users/0007 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "name":"Hernan Hidalgo"
+}
+
+### PUT user doesn't exist
+PUT http://localhost:3000/users/0008 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "name":"Gabriel Garcia Gutierrez"
+}
+
+### PUT bad parameter
+PUT http://localhost:3000/users/0007 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "age":"25"
+}
+
+###
+DELETE http://localhost:3000/users/0007 HTTP/1.1
+Authorization: Bearer mockToken
+
+###
+DELETE http://localhost:3000/users/0009 HTTP/1.1
+Authorization: Bearer mockToken
+
+### Get user by ID
+GET http://localhost:3000/users/0003/houses HTTP/1.1
+Authorization: Bearer mockToken
+
+### Get user's houses by user ID that not exist
+GET http://localhost:3000/users/0009/houses HTTP/1.1
+Authorization: Bearer mockToken
+
+### Get user's houses by filter
+GET http://localhost:3000/users/0003/houses?city=Paris HTTP/1.1
+Authorization: Bearer mockToken
+
+### Get user's houses by filter
+GET http://localhost:3000/users/0003/houses?address=Calle%20Mayor%2022 HTTP/1.1
+Authorization: Bearer mockToken
+
+### Get user's houses by filter
+GET http://localhost:3000/users/0003/houses?city=Paris&country=France HTTP/1.1
+Authorization: Bearer mockToken
+
+### Get user's houses by filter
+GET http://localhost:3000/users/0003/houses?city=Paris&country=Spain HTTP/1.1
+Authorization: Bearer mockToken
+
+### Create new house
+POST http://localhost:3000/users/0002/houses HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "New houses 56",
+    "city": "Cracovia",
+    "country": "Poland"
+}
+
+### Create new house missing user
+POST http://localhost:3000/users/0008/houses HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "New houses 56",
+    "city": "Cracovia",
+    "country": "Poland"
+}
+
+### Create new house incorrect parameters
+POST http://localhost:3000/users/0002/houses HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "New houses 56",
+    "city": "Cracovia"
+}
+
+###
+PUT http://localhost:3000/users/0002/houses/001 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "New new houses 56",
+    "city": "New Cracovia",
+    "country": "Poland"
+}
+
+### PUT user doesn't exist
+PUT http://localhost:3000/users/0008/houses/001 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "New new houses 56",
+    "city": "New Cracovia",
+    "country": "Poland"
+}
+
+### PUT bad parameter
+PUT http://localhost:3000/users/0002/houses/001 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "New new houses 56",
+    "country": "Poland"
+}
+
+### PUT incorrect house
+PUT http://localhost:3000/users/0002/houses/100 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "New new houses 56",
+    "city": "New Cracovia",
+    "country": "Poland"
+}
+
+### PUT incorrect asignated house and user
+PUT http://localhost:3000/users/0005/houses/011 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "New new houses 56",
+    "city": "New Cracovia",
+    "country": "Poland"
+}
+
+###
+PATCH http://localhost:3000/users/0002/houses/001 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "Patch new houses 56"
+}
+
+### PATCH user doesn't exist
+PATCH http://localhost:3000/users/0008/houses/001 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "New new houses 56"
+}
+
+### PATCH bad parameter
+PATCH http://localhost:3000/users/0002/houses/001 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "location": "54"
+}
+
+### PATCH incorrect house
+PATCH http://localhost:3000/users/0002/houses/100 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "54"
+}
+
+### PATCH incorrect asignated house and user
+PATCH http://localhost:3000/users/0005/houses/011 HTTP/1.1
+Authorization: Bearer mockToken
+Content-Type: application/json
+
+{
+    "address": "54"
+}
+
+###
+DELETE http://localhost:3000/users/0002/houses/011 HTTP/1.1
+Authorization: Bearer mockToken
+
+### incorrect user
+DELETE http://localhost:3000/users/0009/houses/011 HTTP/1.1
+Authorization: Bearer mockToken
+
+### incorrect asignated house and user
+DELETE http://localhost:3000/users/0005/houses/011 HTTP/1.1
+Authorization: Bearer mockToken
+
+### incorrect house number
+DELETE http://localhost:3000/users/0002/houses/100 HTTP/1.1
+Authorization: Bearer mockToken

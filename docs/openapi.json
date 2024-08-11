@@ -1,0 +1,698 @@
+{
+    "openapi":"3.0.0",
+    "info":{
+        "title": "UserHabitat",
+        "description": "API REST for users and housing management",
+        "version": "0.0.1"
+    },
+    "servers":[
+        {
+          "url": "https://api.userhabitat.com/v1",
+          "description": "Main UserHabitat API server"
+        }
+    ],
+    "paths":{
+        "/users":{
+            "get":{
+                "summary":"Returns all users",
+                "responses":{
+                    "200":{
+                        "description":"List of users retrieved successfully",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/user"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post":{
+                "summary":"Creates a User",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/newUser"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description":"User created successfully",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid request. Missing or incorrect parameters",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}":{
+            "get":{
+                "summary":"Returns user by Id",
+                "responses":{
+                    "200":{
+                        "description":"User retrieved successfully",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "User not found",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put":{
+                "summary":"Updates a user completely",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/newUser"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"User updated successfully",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid request. Missing or incorrect parameters.",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "User not found",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch":{
+                "summary":"Updates a user partially",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Juan Gonzalez"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"User partially updated successfully",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid request. Missing or incorrect parameters.",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "User not found",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete":{
+                "summary":"Deletes a user",
+                "responses":{
+                    "204":{
+                        "description":"User deleted successfully"
+                    },
+                    "400":{
+                        "description": "The user cannot be deleted because it has associated houses",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "User not found",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters":[
+                {
+                    "name":"id",
+                    "in":"path",
+                    "description":"User Id",
+                    "required":true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "/users/{id}/houses":{
+            "get":{
+                "summary":"Returns all user's houses",
+                "parameters":[
+                    {
+                        "name":"city",
+                        "in":"query",
+                        "description":"House city",
+                        "required":false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name":"address",
+                        "in":"query",
+                        "description":"House address",
+                        "required":false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name":"country",
+                        "in":"query",
+                        "description":"House country",
+                        "required":false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"List of houses retrieved successfully",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/house"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "User not found",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post":{
+                "summary":"Creates a user's house",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/newHouse"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description":"House created successfully",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/house"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid request. Missing or incorrect parameters",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "User not found",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters":[
+                {
+                    "name":"id",
+                    "in":"path",
+                    "description":"User Id",
+                    "required":true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "/users/{id}/houses/{houseId}":{
+            "put":{
+                "summary":"Updates a house completely",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/newHouse"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"House updated successfully",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/house"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid request. Missing or incorrect parameters.",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "User or house not found",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch":{
+                "summary":"Updates a house partially",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Calle Real 555"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Sevilla"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "Spain"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description":"House partially updated successfully",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/house"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid request. Missing or incorrect parameters.",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "User or house not found",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete":{
+                "summary":"Deletes a house",
+                "responses":{
+                    "204":{
+                        "description":"House deleted successfully"
+                    },
+                    "401":{
+                        "description": "Unauthorized",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "User or house not found",
+                        "content": {
+                          "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters":[
+                {
+                    "name":"id",
+                    "in":"path",
+                    "description":"User Id",
+                    "required":true,
+                    "schema": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "name":"houseId",
+                    "in":"path",
+                    "description":"House Id",
+                    "required":true,
+                    "schema": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    },
+    "components":{
+        "securitySchemes": {
+            "mockToken": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas":{
+            "user":{
+                "allOf":[
+                    {
+                        "$ref":"#/components/schemas/newUser"
+                    },
+                    {
+                        "type": "object",
+                        "properties":{
+                            "id":{
+                                "type":"string",
+                                "example":"0000"
+                            }
+                        },
+                        "required":["id"]
+                    }
+                ]
+            },
+            "newUser":{
+                "type": "object",
+                "properties":{
+                    "name":{
+                        "type":"string",
+                        "example":"Juan Perez"
+                    }
+                },
+                "required":["name"]
+            },
+            "house":{
+                "allOf":[
+                    {
+                        "$ref":"#/components/schemas/newHouse"
+                    },
+                    {
+                        "type": "object",
+                        "properties":{
+                            "id":{
+                                "type":"string",
+                                "example":"000"
+                            }
+                        },
+                        "required":["id"]
+                    }
+                ]
+            },
+            "newHouse":{
+                "type": "object",
+                "properties": {
+                    "address": {
+                        "type": "string",
+                        "example": "Calle Real 123"
+                    },
+                    "city": {
+                        "type": "string",
+                        "example": "Toledo"
+                    },
+                    "country": {
+                        "type": "string",
+                        "example": "Spain"
+                    }
+                },
+                "required": ["address", "city", "country"]
+            },
+            "error": {
+                "type": "object",
+                "required": [
+                    "code",
+                    "message"
+                ],
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "security":[
+        {
+            "mockToken":[]
+        }
+    ]
+} 

@@ -1,0 +1,74 @@
+{
+    "houses": [
+        {
+            "id": "101",
+            "address": "Calle Real 123",
+            "city": "Toledo",
+            "country": "Spain",
+            "ownerId": "0001"
+        },
+        {
+            "id": "102",
+            "address": "Avenida Sol 456",
+            "city": "Madrid",
+            "country": "Spain",
+            "ownerId": "0001"
+        },
+        {
+            "id": "103",
+            "address": "Boulevard Saint-Germain 750",
+            "city": "Paris",
+            "country": "France",
+            "ownerId": "0001"
+        },
+        {
+            "id": "104",
+            "address": "Rua da Liberdade 55",
+            "city": "Lisbon",
+            "country": "Portugal",
+            "ownerId": "0002"
+        },
+        {
+            "id": "105",
+            "address": "Calle Luna 789",
+            "city": "Barcelona",
+            "country": "Spain",
+            "ownerId": "0003"
+        },
+        {
+            "id": "106",
+            "address": "Calle Mayor 22",
+            "city": "Valencia",
+            "country": "Spain",
+            "ownerId": "0003"
+        },
+        {
+            "id": "107",
+            "address": "Rue de Rivoli 150",
+            "city": "Paris",
+            "country": "France",
+            "ownerId": "0003"
+        },
+        {
+            "id": "108",
+            "address": "Avenida de la Constitución 78",
+            "city": "Seville",
+            "country": "Spain",
+            "ownerId": "0004"
+        },
+        {
+            "id": "109",
+            "address": "Place du Capitole 10",
+            "city": "Toulouse",
+            "country": "France",
+            "ownerId": "0004"
+        },
+        {
+            "id": "110",
+            "address": "Rua das Flores 32",
+            "city": "Porto",
+            "country": "Portugal",
+            "ownerId": "0005"
+        }
+    ]
+}
