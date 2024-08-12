@@ -1,9 +1,21 @@
 import express from 'express';
 import fs from 'fs';
 import bodyParser from 'body-parser';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsdoc from 'swagger-jsdoc';
+import definition from './docs/openapi.json' with {type:"json"}
+
+const options = {
+    definition,
+    apis: []
+}
+
+const specs = swaggerJsdoc(options);
 
 const app = express();
 const MOCKTOKEN = 'mockToken';
+
+app.use('/swagger',swaggerUi.serve,swaggerUi.setup(specs));
 app.use(bodyParser.json());
 
 const createError = (code, message) => {

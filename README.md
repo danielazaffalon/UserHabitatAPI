@@ -15,6 +15,7 @@ User Habitat API is a RESTful API designed for managing users and their associat
 - **Nodemon**: Utility that automatically restarts the server upon code changes.
 - **JSON Files**: Simple flat file databases (`dbUsers.json`, `dbHouses.json`).
 - **OpenAPI**: Specification for defining API endpoints, request parameters, and response
+- **Swagger**: Tool for generating interactive API documentation.
 
 ## Installation
 1. Clone the repository:
@@ -36,6 +37,38 @@ User Habitat API is a RESTful API designed for managing users and their associat
     npm run dev
     ```
 2. The API will be available at `http://localhost:3000`.
+
+### Swagger Documentation
+This API includes interactive documentation via Swagger. To access the Swagger UI, open your browser and go to:
+    ```bash
+    http://localhost:3000/swagger/
+    ```
+### Using Swagger
+1. Ensure the server is running (`npm run dev`).
+2. Open your browser and navigate to `http://localhost:3000/swagger/`.
+3. In the Swagger interface, you will see all available endpoints. You can click on each one to view details, perform tests, and send requests directly from the interface.
+
+### Example Authentication Token
+This API uses a simulated authentication token. The required token is `mockToken`. To test the endpoints, include the following header in your requests:
+    ```bash
+    Authorization: Bearer mockToken
+    ```
+
+### Endpoints
+#### Users
+- **GET /users**: Returns all users.
+- **POST /users**: Creates a new user. Requires a request body with a JSON object that includes the `name` field.
+- **GET /users/{id}**: Returns the user corresponding to the provided ID.
+- **PUT /users/{id}**: Fully updates an existing user. Requires a request body with a JSON object that includes the `name` field.
+- **PATCH /users/{id}**: Partially updates an existing user. Allows modifying the `name` field.
+- **DELETE /users/{id}**: Deletes a user.
+
+#### Houses
+- **GET /users/{id}/houses**: Returns all houses of the user corresponding to the provided ID. Allows filtering by `city`, `address`, and `country`.
+- **POST /users/{id}/houses**: Creates a new house for the user corresponding to the provided ID. Requires a request body with a JSON object that includes `address`, `city`, and `country`.
+- **PUT /users/{id}/houses/{houseId}**: Fully updates an existing house. Requires a request body with a JSON object that includes `address`, `city`, and `country`.
+- **PATCH /users/{id}/houses/{houseId}**: Partially updates an existing house.
+- **DELETE /users/{id}/houses/{houseId}**: Deletes a house of the user.
 
 ### Example Requests
 - Get all users:
