@@ -179,8 +179,7 @@ app.delete('/users/:id',(req, res) => {
     }
     users.splice(userIndex, 1);
     writeUsers(users);
-    res.status(204);
-    res.json({message: 'User deleted successfully'});
+    res.status(204).send();
 });
 
 app.get('/users/:id/houses', (req, res) => {
