@@ -170,8 +170,16 @@ app.delete('/users/:id',(req, res) => {
         res.json(createError(404,`User ID: ${id} not found`));
         return;
     }
+    let houses = readHouses();
+    houses = houses.filter(house => house.ownerId === id);
+    if(houses.length){
+        res.status(400);
+        res.json(createError(400,`The user ${id} cannot be deleted because it has associated houses`));
+        return;
+    }
     users.splice(userIndex, 1);
-    writeUsers(users)
+    writeUsers(users);
+    res.status(204);
     res.json({message: 'User deleted successfully'});
 });
 
