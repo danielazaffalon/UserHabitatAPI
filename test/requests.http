@@ -1,13 +1,20 @@
+### Get all users
 GET http://localhost:3000/users HTTP/1.1
 Authorization: Bearer mockToken
+
+# This test checks if all users can be retrieved from the system.
 
 ### Get user by ID
 GET http://localhost:3000/users/0002 HTTP/1.1
 Authorization: Bearer mockToken
 
-### Get user by ID that not exist
+# This test checks if a specific user can be retrieved by their ID.
+
+### Get user by ID that does not exist
 GET http://localhost:3000/users/0008 HTTP/1.1
 Authorization: Bearer mockToken
+
+# This test checks the response when trying to retrieve a user that does not exist.
 
 ### Create user
 POST http://localhost:3000/users HTTP/1.1
@@ -18,7 +25,9 @@ Content-Type: application/json
     "name":"Gabriel Garcia"
 }
 
-###
+# This test checks if a new user can be created with valid parameters.
+
+### Update user with PATCH
 PATCH http://localhost:3000/users/0007 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -27,7 +36,9 @@ Content-Type: application/json
     "name":"Gabriel Garcia Gutierrez"
 }
 
-### PATCH user doesn't exist
+# This test checks if an existing user's data can be partially updated with PATCH.
+
+### PATCH user that doesn't exist
 PATCH http://localhost:3000/users/0009 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -36,7 +47,9 @@ Content-Type: application/json
     "name":"Gabriel Garcia Gutierrez"
 }
 
-### PATCH bad parameter
+# This test checks the response when trying to partially update a user that does not exist.
+
+### PATCH with bad parameter
 PATCH http://localhost:3000/users/0007 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -45,7 +58,9 @@ Content-Type: application/json
     "age":"25"
 }
 
-###
+# This test checks the response when sending an invalid parameter in a PATCH request.
+
+### Replace user with PUT
 PUT http://localhost:3000/users/0007 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -54,7 +69,9 @@ Content-Type: application/json
     "name":"Hernan Hidalgo"
 }
 
-### PUT user doesn't exist
+# This test checks if an existing user's data can be fully replaced with PUT.
+
+### PUT user that doesn't exist
 PUT http://localhost:3000/users/0008 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -63,7 +80,9 @@ Content-Type: application/json
     "name":"Gabriel Garcia Gutierrez"
 }
 
-### PUT bad parameter
+# This test checks the response when trying to fully replace a user that does not exist.
+
+### PUT with bad parameter
 PUT http://localhost:3000/users/0007 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -72,39 +91,57 @@ Content-Type: application/json
     "age":"25"
 }
 
-###
+# This test checks the response when sending an invalid parameter in a PUT request.
+
+### Delete user
 DELETE http://localhost:3000/users/0007 HTTP/1.1
 Authorization: Bearer mockToken
 
-###
+# This test checks if an existing user can be deleted.
+
+### Delete user that doesn't exist
 DELETE http://localhost:3000/users/0009 HTTP/1.1
 Authorization: Bearer mockToken
 
-### Get user by ID
+# This test checks the response when trying to delete a user that does not exist.
+
+### Get user's houses by user ID
 GET http://localhost:3000/users/0003/houses HTTP/1.1
 Authorization: Bearer mockToken
 
-### Get user's houses by user ID that not exist
+# This test checks if houses associated with a specific user can be retrieved by their user ID.
+
+### Get user's houses by user ID that does not exist
 GET http://localhost:3000/users/0009/houses HTTP/1.1
 Authorization: Bearer mockToken
 
-### Get user's houses by filter
+# This test checks the response when trying to retrieve houses for a user that does not exist.
+
+### Get user's houses by filter (city)
 GET http://localhost:3000/users/0003/houses?city=Paris HTTP/1.1
 Authorization: Bearer mockToken
 
-### Get user's houses by filter
+# This test checks if houses associated with a specific user can be retrieved by filtering with city.
+
+### Get user's houses by filter (address)
 GET http://localhost:3000/users/0003/houses?address=Calle%20Mayor%2022 HTTP/1.1
 Authorization: Bearer mockToken
 
-### Get user's houses by filter
+# This test checks if houses associated with a specific user can be retrieved by filtering with address.
+
+### Get user's houses by filter (city and country)
 GET http://localhost:3000/users/0003/houses?city=Paris&country=France HTTP/1.1
 Authorization: Bearer mockToken
 
-### Get user's houses by filter
+# This test checks if houses associated with a specific user can be retrieved by filtering with both city and country.
+
+### Get user's houses by filter (city and incorrect country)
 GET http://localhost:3000/users/0003/houses?city=Paris&country=Spain HTTP/1.1
 Authorization: Bearer mockToken
 
-### Create new house
+# This test checks the response when filtering houses with a city and an incorrect country combination.
+
+### Create new house for a user
 POST http://localhost:3000/users/0002/houses HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -115,7 +152,9 @@ Content-Type: application/json
     "country": "Poland"
 }
 
-### Create new house missing user
+# This test checks if a new house can be created for a user with valid parameters.
+
+### Create new house for a missing user
 POST http://localhost:3000/users/0008/houses HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -126,7 +165,9 @@ Content-Type: application/json
     "country": "Poland"
 }
 
-### Create new house incorrect parameters
+# This test checks the response when trying to create a house for a user that does not exist.
+
+### Create new house with incorrect parameters
 POST http://localhost:3000/users/0002/houses HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -136,7 +177,9 @@ Content-Type: application/json
     "city": "Cracovia"
 }
 
-###
+# This test checks the response when trying to create a house with missing parameters.
+
+### Replace house with PUT
 PUT http://localhost:3000/users/0002/houses/001 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -147,7 +190,9 @@ Content-Type: application/json
     "country": "Poland"
 }
 
-### PUT user doesn't exist
+# This test checks if an existing house can be fully replaced with PUT.
+
+### PUT house for user that doesn't exist
 PUT http://localhost:3000/users/0008/houses/001 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -158,7 +203,9 @@ Content-Type: application/json
     "country": "Poland"
 }
 
-### PUT bad parameter
+# This test checks the response when trying to fully replace a house for a user that does not exist.
+
+### PUT house with incorrect parameters
 PUT http://localhost:3000/users/0002/houses/001 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -167,6 +214,8 @@ Content-Type: application/json
     "address": "New new houses 56",
     "country": "Poland"
 }
+
+# This test checks the response when trying to replace a house with missing parameters.
 
 ### PUT incorrect house
 PUT http://localhost:3000/users/0002/houses/100 HTTP/1.1
@@ -179,7 +228,9 @@ Content-Type: application/json
     "country": "Poland"
 }
 
-### PUT incorrect asignated house and user
+# This test checks the response when trying to replace a house that does not exist for a user.
+
+### PUT incorrect assigned house and user
 PUT http://localhost:3000/users/0005/houses/011 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -190,7 +241,9 @@ Content-Type: application/json
     "country": "Poland"
 }
 
-###
+# This test checks the response when trying to replace a house that belongs to another user.
+
+### Update house with PATCH
 PATCH http://localhost:3000/users/0002/houses/001 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -199,7 +252,9 @@ Content-Type: application/json
     "address": "Patch new houses 56"
 }
 
-### PATCH user doesn't exist
+# This test checks if an existing house's data can be partially updated with PATCH.
+
+### PATCH house for user that doesn't exist
 PATCH http://localhost:3000/users/0008/houses/001 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -208,7 +263,9 @@ Content-Type: application/json
     "address": "New new houses 56"
 }
 
-### PATCH bad parameter
+# This test checks the response when trying to partially update a house for a user that does not exist.
+
+### PATCH house with bad parameter
 PATCH http://localhost:3000/users/0002/houses/001 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -216,6 +273,8 @@ Content-Type: application/json
 {
     "location": "54"
 }
+
+# This test checks the response when sending an invalid parameter in a PATCH request.
 
 ### PATCH incorrect house
 PATCH http://localhost:3000/users/0002/houses/100 HTTP/1.1
@@ -226,7 +285,9 @@ Content-Type: application/json
     "address": "54"
 }
 
-### PATCH incorrect asignated house and user
+# This test checks the response when trying to partially update a house that does not exist for a user.
+
+### PATCH incorrect assigned house and user
 PATCH http://localhost:3000/users/0005/houses/011 HTTP/1.1
 Authorization: Bearer mockToken
 Content-Type: application/json
@@ -235,18 +296,29 @@ Content-Type: application/json
     "address": "54"
 }
 
-###
+# This test checks the response when trying to partially update a house that belongs to another user.
+
+### Delete house
 DELETE http://localhost:3000/users/0002/houses/011 HTTP/1.1
 Authorization: Bearer mockToken
 
-### incorrect user
+# This test checks if an existing house can be deleted for a user.
+
+### Delete house with incorrect user
 DELETE http://localhost:3000/users/0009/houses/011 HTTP/1.1
 Authorization: Bearer mockToken
 
-### incorrect asignated house and user
+# This test checks the response when trying to delete a house for a user that does not exist.
+
+### Delete incorrect assigned house and user
 DELETE http://localhost:3000/users/0005/houses/011 HTTP/1.1
 Authorization: Bearer mockToken
 
-### incorrect house number
+
+# This test checks the response when trying to delete a house that belongs to another user.
+
+### Delete incorrect house number
 DELETE http://localhost:3000/users/0002/houses/100 HTTP/1.1
 Authorization: Bearer mockToken
+
+# This test checks the response when trying to delete a house that does not exist for a user.

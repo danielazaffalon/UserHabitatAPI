@@ -18,6 +18,12 @@ const MOCKTOKEN = 'mockToken';
 app.use('/swagger',swaggerUi.serve,swaggerUi.setup(specs));
 app.use(bodyParser.json());
 
+/**
+ * Creates an error object with a specified code and message.
+ * @param {number} code - HTTP status code.
+ * @param {string} message - Error message.
+ * @returns {Object} Error object with code and message.
+ */
 const createError = (code, message) => {
     return {
         code,
@@ -25,6 +31,11 @@ const createError = (code, message) => {
     }
 }
 
+/**
+ * Middleware to authenticate requests using a mock token.
+ * Verifies the presence and validity of the token in the request headers.
+ * If invalid, it responds with a 401 Unauthorized error.
+ */
 app.use((req,res,next) => {
     const token = req.headers?.authorization;
     if(!token || token !== `Bearer ${MOCKTOKEN}`){
@@ -35,10 +46,20 @@ app.use((req,res,next) => {
     next();
 });
 
+/**
+ * Pads a number with leading zeros to reach a specified length.
+ * @param {number} num - The number to pad.
+ * @param {number} numLength - Desired length of the resulting string.
+ * @returns {string} Zero-padded number as a string.
+ */
 function zeroPad(num, numLength) {
     return num.toString().padStart(numLength, "0");
 }
 
+/**
+ * Reads the users data from the JSON file.
+ * @returns {Array} Array of user objects.
+ */
 const readUsers = () =>{
     try{
         const users = fs.readFileSync('./data/dbUsers.json');
@@ -48,6 +69,10 @@ const readUsers = () =>{
     }
 }
 
+/**
+ * Writes the users data to the JSON file.
+ * @param {Array} users - Array of user objects to be written to the file.
+ */
 const writeUsers = (users) =>{
     try{
         fs.writeFileSync('./data/dbUsers.json', JSON.stringify({users}, null, 4));
@@ -56,6 +81,10 @@ const writeUsers = (users) =>{
     }
 }
 
+/**
+ * Reads the houses data from the JSON file.
+ * @returns {Array} Array of house objects.
+ */
 const readHouses = () =>{
     try{
         const houses = fs.readFileSync('./data/dbHouses.json');
@@ -65,6 +94,10 @@ const readHouses = () =>{
     }
 }
 
+/**
+ * Writes the houses data to the JSON file.
+ * @param {Array} houses - Array of house objects to be written to the file.
+ */
 const writeHouses = (houses) =>{
     try{
         fs.writeFileSync('./data/dbHouses.json', JSON.stringify({houses}, null, 4));
@@ -73,15 +106,25 @@ const writeHouses = (houses) =>{
     }
 }
 
+/**
+ * Root endpoint that provides a welcome message.
+ */
 app.get('/',(req, res) => {
     res.send('Welcome to my UserHabitat API');
 });
 
+/**
+ * Retrieves and returns a list of all users.
+ */
 app.get('/users',(req, res) => {
     const users = readUsers();
     res.send(users);
 });
 
+/**
+ * Creates a new user with a unique ID, validates the input, and returns the created user.
+ * @param {string} req.body.name - The name of the user.
+ */
 app.post('/users',(req, res) => {
     const users = readUsers();
     const body = req.body;
@@ -101,6 +144,10 @@ app.post('/users',(req, res) => {
     res.json(newUser);
 });
 
+/**
+ * Retrieves and returns a user by their ID.
+ * @param {string} req.params.id - The ID of the user.
+ */
 app.get('/users/:id',(req, res) => {
     const users = readUsers();
     const id = req.params.id;
@@ -113,6 +160,11 @@ app.get('/users/:id',(req, res) => {
     }
 });
 
+/**
+ * Updates an existing user by their ID, validates the input, and returns the updated user.
+ * @param {string} req.params.id - The ID of the user.
+ * @param {string} req.body.name - The updated name of the user.
+ */
 app.put('/users/:id',(req, res) => {
     const users = readUsers();
     const body = req.body;
@@ -137,6 +189,11 @@ app.put('/users/:id',(req, res) => {
     res.json(users[userIndex]);
 });
 
+/**
+ * Partially updates an existing user by their ID, validates the input, and returns the updated user.
+ * @param {string} req.params.id - The ID of the user.
+ * @param {string} req.body.name - The updated name of the user.
+ */
 app.patch('/users/:id',(req, res) => {
     const users = readUsers();
     const body = req.body;
@@ -161,6 +218,10 @@ app.patch('/users/:id',(req, res) => {
     res.json(users[userIndex]);
 });
 
+/**
+ * Deletes a user by their ID if they have no associated houses.
+ * @param {string} req.params.id - The ID of the user.
+ */
 app.delete('/users/:id',(req, res) => {
     const users = readUsers();
     const id = req.params.id;
@@ -182,8 +243,15 @@ app.delete('/users/:id',(req, res) => {
     res.status(204).send();
 });
 
+/**
+ * Retrieves and returns a list of houses associated with a user.
+ * Allows filtering by city, address, and country through query parameters.
+ * @param {string} req.params.id - The ID of the user.
+ * @param {string} [req.query.city] - The city filter.
+ * @param {string} [req.query.address] - The address filter.
+ * @param {string} [req.query.country] - The country filter.
+ */
 app.get('/users/:id/houses', (req, res) => {
-    
     const users = readUsers();
     const id = req.params.id;
     const user = users.find(user => user.id === id);
@@ -211,6 +279,13 @@ app.get('/users/:id/houses', (req, res) => {
     res.json(houses);
 });
 
+/**
+ * Creates a new house associated with a user, validates the input, and returns the created house.
+ * @param {string} req.params.id - The ID of the user.
+ * @param {string} req.body.address - The address of the house.
+ * @param {string} req.body.city - The city of the house.
+ * @param {string} req.body.country - The country of the house.
+ */
 app.post('/users/:id/houses', (req, res) => {
     const users = readUsers();
     const id = req.params.id;
@@ -255,6 +330,14 @@ app.post('/users/:id/houses', (req, res) => {
     res.json(newHouse);
 });
 
+/**
+ * Updates an existing house associated with a user, validates the input, and returns the updated house.
+ * @param {string} req.params.id - The ID of the user.
+ * @param {string} req.params.houseId - The ID of the house.
+ * @param {string} req.body.address - The updated address of the house.
+ * @param {string} req.body.city - The updated city of the house.
+ * @param {string} req.body.country - The updated country of the house.
+ */
 app.put('/users/:id/houses/:houseId', (req, res) => {
     const users = readUsers();
     const id = req.params.id;
@@ -303,6 +386,14 @@ app.put('/users/:id/houses/:houseId', (req, res) => {
     res.json(houses[houseIndex]);
 });
 
+/**
+ * Partially updates an existing house associated with a user, validates the input, and returns the updated house.
+ * @param {string} req.params.id - The ID of the user.
+ * @param {string} req.params.houseId - The ID of the house.
+ * @param {string} [req.body.address] - The updated address of the house.
+ * @param {string} [req.body.city] - The updated city of the house.
+ * @param {string} [req.body.country] - The updated country of the house.
+ */
 app.patch('/users/:id/houses/:houseId', (req, res) => {
     const users = readUsers();
     const id = req.params.id;
@@ -342,6 +433,11 @@ app.patch('/users/:id/houses/:houseId', (req, res) => {
     }
 });
 
+/**
+ * Deletes a house associated with a user by its ID.
+ * @param {string} req.params.id - The ID of the user.
+ * @param {string} req.params.houseId - The ID of the house.
+ */
 app.delete('/users/:id/houses/:houseId', (req, res) => {
     const users = readUsers();
     const id = req.params.id;
@@ -367,6 +463,9 @@ app.delete('/users/:id/houses/:houseId', (req, res) => {
     res.status(204).send();
 });
 
+/**
+ * Starts the server and listens on port 3000.
+ */
 app.listen(3000, () => {
     console.log('Server listening on port 3000')
 });
