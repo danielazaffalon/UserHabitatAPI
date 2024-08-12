@@ -50,7 +50,7 @@ This API includes interactive documentation via Swagger. To access the Swagger U
 
 ### Example Authentication Token
 This API uses a simulated authentication token. The required token is `mockToken`. To test the endpoints, include the following header in your requests:
-    ```bash
+    ```
     Authorization: Bearer mockToken
     ```
 
